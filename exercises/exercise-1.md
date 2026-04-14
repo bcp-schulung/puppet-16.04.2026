@@ -85,7 +85,7 @@ cat > /etc/puppet/code/environments/production/manifests/site.pp <<'EOF'
 node default {
   file { '/root/puppet_works.txt':
     ensure  => file,
-    content => "Puppet is managing this node: ${facts['fqdn']}\nLast run: ${facts['system_uptime']['uptime']}\n",
+    content => "Puppet is managing this node: ${trusted['certname']}\nLast run: ${facts['system_uptime']['uptime']}\n",
     owner   => 'root',
     mode    => '0644',
   }
