@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Puppet-managed Nginx</title>
+</head>
+<body>
+    <h1>Why do programmers prefer dark mode?</h1>
+    <p>Because light attracts bugs!</p>
+
+    <hr>
+    <h3>Puppet Facts</h3>
+    <ul>
+        <li><strong>Hostname:</strong> <%= @hostname %></li>
+        <li><strong>FQDN:</strong> <%= @fqdn %></li>
+        <li><strong>OS:</strong> <%= @operatingsystem %> <%= @operatingsystemrelease %></li>
+        <li><strong>IP Address:</strong> <%= @ipaddress %></li>
+        <li><strong>Catalog compiled at:</strong> <%= Time.now.strftime('%Y-%m-%d %H:%M:%S') %></li>
+        <li><strong>Uptime:</strong> <%= @uptime %></li>
+    </ul>
+</body>
+</html>
