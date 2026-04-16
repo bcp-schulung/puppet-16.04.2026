@@ -35,3 +35,4 @@ pkg/
 .tmp/
 tmp/
 log/
+mynginx/spec/fixtures/modules/mynginx
