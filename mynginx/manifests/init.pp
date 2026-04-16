@@ -1,3 +1,4 @@
+# Manages nginx installation, configuration, and default error pages.
 class mynginx (
   String  $package_name        = 'nginx',
   String  $service_name        = 'nginx',

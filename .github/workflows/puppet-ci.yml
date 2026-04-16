@@ -42,4 +42,4 @@ jobs:
       - name: Run Puppet unit tests
         working-directory: mynginx
         run: |
-          bundle exec rspec
+          bundle exec rspec spec

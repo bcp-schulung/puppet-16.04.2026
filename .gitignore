@@ -18,3 +18,20 @@ terraform.rc
 vm_passwords.csv
 setup/student-*-creds.json
 setup/
+
+# macOS
+.DS_Store
+
+# Ruby / Bundler
+.bundle/
+vendor/bundle/
+**/vendor/bundle/
+Gemfile.lock
+
+# Puppet / RSpec artifacts
+.rspec_status
+coverage/
+pkg/
+.tmp/
+tmp/
+log/

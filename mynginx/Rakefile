@@ -1,5 +1,6 @@
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
+require 'rspec/core/rake_task'
 
 PuppetLint.configuration.fail_on_warnings = true
 PuppetLint.configuration.send('disable_80chars')
@@ -9,6 +10,11 @@ desc 'Validate Puppet code and templates'
 task :validate do
   sh 'bundle exec puppet parser validate manifests/*.pp'
   sh 'bundle exec puppet epp validate templates/*.epp'
+end
+
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = 'spec/**/*_spec.rb'
+  t.rspec_opts = '--exclude-pattern spec/fixtures/**/*_spec.rb,vendor/bundle/**/*_spec.rb'
 end
 
 task default: [:validate, :spec]

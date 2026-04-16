@@ -1,3 +1,4 @@
+# Creates an nginx site and optionally manages its homepage content.
 define mynginx::site (
   String           $docroot       = '/var/www/mynginx',
   String           $server_name   = '_',
@@ -12,29 +13,29 @@ define mynginx::site (
   }
 
   $page_content = $index_content ? {
-    undef   => @("HTML"/L)
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <title>${title}</title>
-      </head>
-      <body>
-        <h1>${title}</h1>
-        <p>This page is managed by the mynginx Puppet module.</p>
-        <p>Document root: ${docroot}</p>
-      </body>
-      </html>
-      | HTML,
+    undef   => join([
+      '<!DOCTYPE html>',
+      '<html>',
+      '<head>',
+      '  <meta charset="utf-8">',
+      "  <title>${title}</title>",
+      '</head>',
+      '<body>',
+      "  <h1>${title}</h1>",
+      '  <p>This page is managed by the mynginx Puppet module.</p>',
+      "  <p>Document root: ${docroot}</p>",
+      '</body>',
+      '</html>',
+      '',
+    ], "\n"),
     default => $index_content,
   }
 
   file { $docroot:
-    ensure  => directory,
-    owner   => 'www-data',
-    group   => 'www-data',
-    mode    => '0755',
-    require => Class['mynginx'],
+    ensure => directory,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0755',
   }
 
   if $manage_index {
@@ -59,7 +60,6 @@ define mynginx::site (
       'listen_port'   => $listen_port,
       'listen_suffix' => $listen_suffix,
     }),
-    require => Class['mynginx'],
     notify  => Service['nginx'],
   }
 
