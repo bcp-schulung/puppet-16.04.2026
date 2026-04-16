@@ -1,21 +1,10 @@
 node 'nginx' {
-    package { 'nginx':
-        ensure => installed,
-    }
+  class { 'mynginx':
+    manage_default_site => false,
+  }
 
-    service { 'nginx':
-        ensure => running,
-        enable => true,
-        require => Package['nginx'],
-    }
-
-    file { '/var/www/html/index.html':
-        ensure  => file,
-        content => inline_template(file('/etc/puppet/code/environments/production/manifests/index.html')),
-        owner   => 'www-data',
-        group   => 'www-data',
-        mode    => '0644',
-        require => Package['nginx'],
-        notify  => Service['nginx'],
-    }
+  mynginx::site { 'default':
+    docroot      => '/srv/my-node-content',
+    manage_index => true,
+  }
 }
