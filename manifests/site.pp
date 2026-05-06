@@ -12,4 +12,10 @@ node default {
   notify { 'puppet_check_in':
     message => "Node ${trusted['certname']} checked in at staging.",
   }
+
+  class { 'postgres':
+    pg_database => 'jokes',
+    pg_user     => 'joker',
+    pg_password => 'letmein',
+  }
 }
