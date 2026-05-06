@@ -1,0 +1,7 @@
+# Node-specific Hiera data for vm-2.
+# These values override anything in common.yaml for this node only.
+
+# All services run on localhost on vm-2
+frontend::backend_host: 'localhost'
+backend::db_host:       'localhost'
+backend::frontend_host: 'localhost'

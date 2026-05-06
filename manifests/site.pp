@@ -1,24 +1,9 @@
 # Dev environment — managed by r10k
+# Class parameters are supplied by Hiera (data/common.yaml, data/nodes/<certname>.yaml).
 node 'vm-2' {
-  class { 'frontend':
-    port         => 3000,
-    backend_host => 'localhost',
-  }
-
-  class { 'backend':
-    port          => 3001,
-    frontend_host => 'localhost',
-    db_host       => 'localhost',
-    db_user       => 'joker',
-    db_database   => 'jokes',
-    db_password   => 'letmein',
-  }
-
-  class { 'postgres':
-    pg_database => 'jokes',
-    pg_user     => 'joker',
-    pg_password => 'letmein',
-  }
+  include frontend
+  include backend
+  include postgres
 }
 
 node default {
