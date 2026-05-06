@@ -1,0 +1,24 @@
+<%- | String $user, String $group, String $app_dir | -%>
+[Unit]
+Description=Node.js Frontend Application
+After=network.target
+
+[Service]
+Type=simple
+User=<%= $user %>
+Group=<%= $group %>
+WorkingDirectory=<%= $app_dir %>
+ExecStart=/usr/bin/node <%= $app_dir %>/index.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+EnvironmentFile=<%= $app_dir %>/.env
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

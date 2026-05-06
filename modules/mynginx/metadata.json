@@ -1,0 +1,11 @@
+{
+  "name": "teaching-mynginx",
+  "version": "0.1.0",
+  "author": "GitHub Copilot",
+  "summary": "Simple teaching Puppet module for nginx",
+  "license": "MIT",
+  "source": "https://example.invalid/mynginx",
+  "project_page": "https://example.invalid/mynginx",
+  "issues_url": "https://example.invalid/mynginx/issues",
+  "dependencies": []
+}
