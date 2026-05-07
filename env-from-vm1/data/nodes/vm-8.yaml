@@ -1,0 +1,4 @@
+---
+
+backend::frontend_host: 'vm-5'
+backend::db_host: 'vm-10'

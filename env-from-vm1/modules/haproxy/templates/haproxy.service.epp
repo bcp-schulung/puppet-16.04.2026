@@ -1,0 +1,22 @@
+<%- | String $user, String $group, String $config_file | -%>
+[Unit]
+Description=HAProxy Load Balancer
+After=network.target
+
+[Service]
+Type=simple
+User=<%= $user %>
+Group=<%= $group %>
+ExecStart=/usr/sbin/haproxy -f <%= $config_file %> -db
+ExecReload=/usr/sbin/haproxy -f <%= $config_file %> -c -q && /bin/kill -USR2 $MAINPID
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

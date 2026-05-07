@@ -1,0 +1,6 @@
+---
+
+jokes::database:
+  db_pass: 'awSvw7F9eD7SkaiY'
+  db_user: 'joker'
+  db_name: 'jokes'

@@ -1,0 +1,26 @@
+<% | Integer $frontend_port, Integer $backend_port | -%>
+global
+  daemon
+defaults
+    mode http
+    log global
+    option httplog
+    timeout connect 5s
+    timeout client 30s
+    timeout server 30s 
+frontend webserver
+    bind *:2000
+    acl is_api path_beg /api
+    use_backend api_pool if is_api
+    default_backend static_frontend_pool
+
+backend static_frontend_pool
+    balance roundrobin
+    server vm-5 vm-5:<%= $frontend_port %>
+    server vm-6 vm-6:<%= $frontend_port %>
+    server vm-7 vm-7:<%= $frontend_port %>
+
+backend api_pool
+    balance roundrobin
+    server vm-8 vm-8:<%= $backend_port %>
+    server vm-9 vm-9:<%= $backend_port %>

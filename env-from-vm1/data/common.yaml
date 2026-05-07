@@ -1,0 +1,26 @@
+---
+# Common Hiera data — applies to all nodes in the dev environment.
+# Node-specific files in data/nodes/<certname>.yaml override these values.
+
+# postgres class defaults
+postgres::pg_database: 'jokes'
+postgres::pg_user:     'joker'
+postgres::pg_password: 'letmein'
+postgres::pg_version:  '16'
+
+# backend class defaults
+backend::port:          3001
+backend::db_host:       'localhost'
+backend::db_user:       'joker'
+backend::db_database:   'jokes'
+backend::db_password:   'letmein'
+backend::user:          'nodejs'
+backend::group:         'nodejs'
+backend::frontend_host: 'localhost'
+
+# frontend class defaults
+frontend::port:         3000
+frontend::backend_host: 'localhost'
+frontend::backend_port: 2000
+frontend::user:          'nodejs'
+frontend::group:         'nodejs'

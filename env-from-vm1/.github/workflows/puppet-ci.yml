@@ -1,0 +1,46 @@
+name: Puppet CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install Ruby dependencies
+        working-directory: mynginx
+        run: |
+          bundle config set path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Lint Puppet manifests
+        working-directory: mynginx
+        run: |
+          find manifests ../exercises -name '*.pp' -print0 | xargs -0 bundle exec puppet-lint
+
+      - name: Validate Puppet syntax
+        working-directory: mynginx
+        run: |
+          find manifests ../exercises -name '*.pp' -print0 | xargs -0 bundle exec puppet parser validate
+          find templates -name '*.epp' -print0 | xargs -0 bundle exec puppet epp validate
+
+      - name: Validate module metadata
+        working-directory: mynginx
+        run: |
+          bundle exec metadata-json-lint metadata.json
+
+      - name: Run Puppet unit tests
+        working-directory: mynginx
+        run: |
+          rm -rf spec/fixtures/modules/mynginx
+          bundle exec rspec spec

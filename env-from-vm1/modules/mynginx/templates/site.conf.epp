@@ -1,0 +1,25 @@
+server {
+  listen <%= $listen_port %><%= $listen_suffix %>;
+  listen [::]:<%= $listen_port %><%= $listen_suffix %>;
+
+  server_name <%= $server_name %>;
+  root <%= $docroot %>;
+  index index.html index.htm;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  error_page 403 404 /40x.html;
+  error_page 500 502 503 504 /50x.html;
+
+  location = /40x.html {
+    root /usr/share/nginx/html;
+    internal;
+  }
+
+  location = /50x.html {
+    root /usr/share/nginx/html;
+    internal;
+  }
+}

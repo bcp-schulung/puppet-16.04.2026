@@ -1,0 +1,14 @@
+127.0.0.1 localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1 localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+178.104.230.126 vm-4 # haproxy
+178.104.233.138 vm-5 # frontend
+178.104.225.122 vm-6 # frontend
+178.104.230.104 vm-7 # frontend
+159.69.111.48 vm-8   # backend
+178.104.237.130 vm-9 # backend
+159.69.106.167 vm-10 # db
