@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="100%" style="background:#fff;font-family:trebuchet ms,verdana,arial,sans-serif;">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="450" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Cross-Platform Module Structure</text>
+
+  <!-- Module init.pp at top -->
+  <rect x="300" y="48" width="300" height="52" rx="8" fill="#ECECFF" stroke="#9370DB" stroke-width="2"/>
+  <text x="450" y="68" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">mymodule::init.pp</text>
+  <text x="450" y="87" text-anchor="middle" font-size="11" fill="#555">contain install + config + service</text>
+
+  <!-- Branch down -->
+  <line x1="450" y1="100" x2="450" y2="128" stroke="#555" stroke-width="2"/>
+  <line x1="200" y1="128" x2="700" y2="128" stroke="#555" stroke-width="2"/>
+  <line x1="200" y1="128" x2="200" y2="158" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="450" y1="128" x2="450" y2="158" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="700" y1="128" x2="700" y2="158" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- install.pp -->
+  <rect x="60" y="158" width="280" height="120" rx="8" fill="#d4c5f9" stroke="#9370DB" stroke-width="1.5"/>
+  <text x="200" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">mymodule::install</text>
+  <text x="80" y="198" font-size="11" fill="#444">$pkg_name = $facts['kernel'] ? {</text>
+  <text x="80" y="214" font-size="11" fill="#444">  'windows' =&gt; 'MyApp',</text>
+  <text x="80" y="230" font-size="11" fill="#444">  'Linux'   =&gt; 'myapp',</text>
+  <text x="80" y="246" font-size="11" fill="#444">  default   =&gt; 'myapp', }</text>
+  <text x="80" y="262" font-size="11" fill="#444">package { $pkg_name: ensure =&gt; installed }</text>
+
+  <!-- config.pp -->
+  <rect x="310" y="158" width="280" height="120" rx="8" fill="#d4c5f9" stroke="#9370DB" stroke-width="1.5"/>
+  <text x="450" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">mymodule::config</text>
+  <text x="330" y="198" font-size="11" fill="#444">$cfg_path = $facts['kernel'] ? {</text>
+  <text x="330" y="214" font-size="11" fill="#444">  'windows' =&gt; 'C:/ProgramData/App',</text>
+  <text x="330" y="230" font-size="11" fill="#444">  default   =&gt; '/etc/myapp', }</text>
+  <text x="330" y="246" font-size="11" fill="#444">file { "${cfg_path}/app.conf":</text>
+  <text x="330" y="262" font-size="11" fill="#444">  content =&gt; epp('mymodule/app.conf.epp') }</text>
+
+  <!-- service.pp -->
+  <rect x="560" y="158" width="280" height="120" rx="8" fill="#d4c5f9" stroke="#9370DB" stroke-width="1.5"/>
+  <text x="700" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">mymodule::service</text>
+  <text x="580" y="198" font-size="11" fill="#444">$svc_name = $facts['kernel'] ? {</text>
+  <text x="580" y="214" font-size="11" fill="#444">  'windows' =&gt; 'MyAppSvc',</text>
+  <text x="580" y="230" font-size="11" fill="#444">  default   =&gt; 'myapp', }</text>
+  <text x="580" y="246" font-size="11" fill="#444">service { $svc_name:</text>
+  <text x="580" y="262" font-size="11" fill="#444">  ensure =&gt; running, enable =&gt; true }</text>
+
+  <!-- Windows-specific subclass -->
+  <line x1="700" y1="278" x2="700" y2="308" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="560" y="308" width="280" height="80" rx="8" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="700" y="328" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">mymodule::windows</text>
+  <text x="580" y="347" font-size="11" fill="#444">Windows-only resources:</text>
+  <text x="580" y="363" font-size="11" fill="#444">registry_value, acl, windows_env</text>
+  <text x="580" y="379" font-size="11" fill="#444">Only included when kernel == windows</text>
+
+  <!-- Hiera data section -->
+  <rect x="60" y="415" width="780" height="50" rx="8" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="450" y="436" text-anchor="middle" font-size="13" font-weight="bold" fill="#555">Hiera — Platform-specific data separation</text>
+  <text x="450" y="454" text-anchor="middle" font-size="11" fill="#555">data/os/windows.yaml  ·  data/os/RedHat.yaml  ·  data/os/Ubuntu.yaml  ·  data/common.yaml</text>
+</svg>

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" style="background:#fff;font-family:trebuchet ms,verdana,arial,sans-serif;">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrl" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#388e3c"/>
+    </marker>
+  </defs>
+  <text x="480" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Puppet DSC Bridge — How dsc_* Resources Work</text>
+
+  <!-- Puppet Manifest -->
+  <rect x="20" y="55" width="220" height="100" rx="8" fill="#ECECFF" stroke="#9370DB" stroke-width="2"/>
+  <text x="130" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Puppet Manifest</text>
+  <text x="130" y="98" text-anchor="middle" font-size="11" fill="#444">dsc_windowsfeature {</text>
+  <text x="130" y="114" text-anchor="middle" font-size="11" fill="#444">  'Web-Server':</text>
+  <text x="130" y="130" text-anchor="middle" font-size="11" fill="#444">  dsc_ensure =&gt; present,</text>
+  <text x="130" y="146" text-anchor="middle" font-size="11" fill="#444">}</text>
+
+  <line x1="240" y1="105" x2="310" y2="105" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="275" y="96" text-anchor="middle" font-size="10" fill="#888">compiled</text>
+
+  <!-- Puppet DSC module -->
+  <rect x="310" y="55" width="210" height="100" rx="8" fill="#d4c5f9" stroke="#9370DB" stroke-width="1.5"/>
+  <text x="415" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">puppetlabs-dsc_lite</text>
+  <text x="415" y="96" text-anchor="middle" font-size="11" fill="#555">or auto-generated</text>
+  <text x="415" y="116" text-anchor="middle" font-size="11" fill="#555">dsc_* resource types</text>
+  <text x="415" y="133" text-anchor="middle" font-size="11" fill="#555">map parameters to</text>
+  <text x="415" y="149" text-anchor="middle" font-size="11" fill="#555">DSC resource format</text>
+
+  <line x1="520" y1="105" x2="590" y2="105" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="555" y="96" text-anchor="middle" font-size="10" fill="#888">invokes</text>
+
+  <!-- PS bridge -->
+  <rect x="590" y="55" width="200" height="100" rx="8" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="690" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">PowerShell Bridge</text>
+  <text x="690" y="96" text-anchor="middle" font-size="11" fill="#555">Invoke-DscResource</text>
+  <text x="690" y="113" text-anchor="middle" font-size="11" fill="#555">-Method Get/Set/Test</text>
+  <text x="690" y="130" text-anchor="middle" font-size="11" fill="#555">-ModuleName ...</text>
+  <text x="690" y="147" text-anchor="middle" font-size="11" fill="#555">-Property @{...}</text>
+
+  <line x1="790" y1="105" x2="860" y2="105" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="825" y="96" text-anchor="middle" font-size="10" fill="#888">calls</text>
+
+  <!-- DSC Resource -->
+  <rect x="860" y="55" width="80" height="100" rx="8" fill="#ffe0b2" stroke="#e65100" stroke-width="1.5"/>
+  <text x="900" y="86" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">DSC</text>
+  <text x="900" y="104" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Resource</text>
+  <text x="900" y="122" text-anchor="middle" font-size="10" fill="#555">(LCM)</text>
+  <text x="900" y="140" text-anchor="middle" font-size="10" fill="#555">Windows</text>
+  <text x="900" y="152" text-anchor="middle" font-size="10" fill="#555">native</text>
+
+  <!-- Three-phase flow below -->
+  <text x="480" y="195" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Three-Phase Execution (same as all Puppet resources)</text>
+
+  <!-- GET -->
+  <rect x="60" y="215" width="240" height="80" rx="8" fill="#e8eaf6" stroke="#3949ab" stroke-width="1.5"/>
+  <text x="180" y="237" text-anchor="middle" font-size="13" font-weight="bold" fill="#3949ab">1. GET (current state)</text>
+  <text x="180" y="257" text-anchor="middle" font-size="11" fill="#333">Invoke-DscResource -Method Get</text>
+  <text x="180" y="273" text-anchor="middle" font-size="11" fill="#333">Returns a hash of current state</text>
+  <text x="180" y="289" text-anchor="middle" font-size="11" fill="#333">Puppet uses this to detect drift</text>
+
+  <line x1="300" y1="255" x2="360" y2="255" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- TEST -->
+  <rect x="360" y="215" width="240" height="80" rx="8" fill="#e8eaf6" stroke="#3949ab" stroke-width="1.5"/>
+  <text x="480" y="237" text-anchor="middle" font-size="13" font-weight="bold" fill="#3949ab">2. TEST (in sync?)</text>
+  <text x="480" y="257" text-anchor="middle" font-size="11" fill="#333">Invoke-DscResource -Method Test</text>
+  <text x="480" y="273" text-anchor="middle" font-size="11" fill="#333">Returns $true / $false</text>
+  <text x="480" y="289" text-anchor="middle" font-size="11" fill="#333">If $true → no action needed</text>
+
+  <line x1="600" y1="255" x2="660" y2="255" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- SET -->
+  <rect x="660" y="215" width="240" height="80" rx="8" fill="#e8f5e9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="780" y="237" text-anchor="middle" font-size="13" font-weight="bold" fill="#388e3c">3. SET (apply change)</text>
+  <text x="780" y="257" text-anchor="middle" font-size="11" fill="#333">Invoke-DscResource -Method Set</text>
+  <text x="780" y="273" text-anchor="middle" font-size="11" fill="#333">Only called when drift detected</text>
+  <text x="780" y="289" text-anchor="middle" font-size="11" fill="#333">Idempotent by design</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="325" width="840" height="60" rx="8" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="480" y="348" text-anchor="middle" font-size="13" font-weight="bold" fill="#555">Auto-generated DSC modules on Puppet Forge</text>
+  <text x="480" y="366" text-anchor="middle" font-size="11" fill="#555">puppet-windowsfeature  ·  puppet-iis  ·  puppet-dsc  ·  puppet-sqlserver_dsc</text>
+  <text x="480" y="382" text-anchor="middle" font-size="11" fill="#555">Generated from PowerShell gallery DSC resources using: pdk new module --template-url puppetlabs/pdk-templates</text>
+</svg>

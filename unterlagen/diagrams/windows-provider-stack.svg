@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="100%" style="background:#fff;font-family:trebuchet ms,verdana,arial,sans-serif;">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="450" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Windows Provider Stack — How Puppet Applies Resources</text>
+
+  <!-- Layer 1: Puppet Manifest -->
+  <rect x="200" y="50" width="500" height="48" rx="8" fill="#ECECFF" stroke="#9370DB" stroke-width="2"/>
+  <text x="450" y="70" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Puppet Manifest (.pp)</text>
+  <text x="450" y="88" text-anchor="middle" font-size="12" fill="#555">package { 'googlechrome': ensure =&gt; installed, provider =&gt; chocolatey }</text>
+
+  <line x1="450" y1="98" x2="450" y2="124" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="490" y="116" font-size="11" fill="#888">resource type</text>
+
+  <!-- Layer 2: Resource Type -->
+  <rect x="200" y="124" width="500" height="42" rx="8" fill="#d4c5f9" stroke="#9370DB" stroke-width="1.5"/>
+  <text x="450" y="140" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Resource Type Abstraction Layer</text>
+  <text x="450" y="157" text-anchor="middle" font-size="11" fill="#555">Validates parameters, resolves defaults, selects provider</text>
+
+  <line x1="450" y1="166" x2="450" y2="192" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="490" y="184" font-size="11" fill="#888">provider lookup</text>
+
+  <!-- Layer 3: Providers -->
+  <rect x="60" y="192" width="370" height="80" rx="8" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="245" y="212" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Windows Providers (Ruby)</text>
+  <text x="80" y="235" font-size="11" fill="#333">• chocolatey   — Chocolatey package mgr</text>
+  <text x="80" y="251" font-size="11" fill="#333">• windows       — native MSI / registry</text>
+  <text x="80" y="267" font-size="11" fill="#333">• puppet_gem    — Ruby gems via Puppet Ruby</text>
+
+  <rect x="470" y="192" width="370" height="80" rx="8" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="655" y="212" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">DSC Providers (generated)</text>
+  <text x="490" y="235" font-size="11" fill="#333">• dsc_windowsfeature</text>
+  <text x="490" y="251" font-size="11" fill="#333">• dsc_registry</text>
+  <text x="490" y="267" font-size="11" fill="#333">• dsc_service   — 500+ DSC resources available</text>
+
+  <line x1="245" y1="272" x2="245" y2="302" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="655" y1="272" x2="655" y2="302" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 4: Execution engines -->
+  <rect x="60" y="302" width="370" height="48" rx="8" fill="#ffe0b2" stroke="#e65100" stroke-width="1.5"/>
+  <text x="245" y="323" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Ruby / Win32 API calls</text>
+  <text x="245" y="340" text-anchor="middle" font-size="11" fill="#555">registry access, SCM, file ACLs, user management</text>
+
+  <rect x="470" y="302" width="370" height="48" rx="8" fill="#ffe0b2" stroke="#e65100" stroke-width="1.5"/>
+  <text x="655" y="323" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">PowerShell + LCM</text>
+  <text x="655" y="340" text-anchor="middle" font-size="11" fill="#555">Invoke-DscResource → Windows LCM engine</text>
+
+  <line x1="245" y1="350" x2="245" y2="380" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="655" y1="350" x2="655" y2="380" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 5: Windows OS -->
+  <rect x="60" y="380" width="780" height="48" rx="8" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+  <text x="450" y="400" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Windows Operating System</text>
+  <text x="450" y="418" text-anchor="middle" font-size="11" fill="#555">NTFS  ·  Registry  ·  SCM  ·  WMI  ·  Active Directory  ·  IIS</text>
+</svg>
